@@ -1,0 +1,13 @@
+{
+    "socios": [
+      {
+        "id": 1,
+        "nombre": "Juan",
+        "apellido": "Pérez",
+        "edad": 30,
+        "disciplina": "Fútbol",
+        "genero": "Masculino",
+        "fechaInscripcion": "2015-01-15"
+      }
+    ]
+}

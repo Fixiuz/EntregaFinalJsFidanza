@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Deportivo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Gestión de Socios - Club Deportivo </h1>
+
+        <section>
+            <h2>Listado de Socios</h2>
+            <table id="tablaSocios">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Número de Socio</th>
+                        <th>Disciplina</th>
+                        <th>Género</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaSocios"></tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Agregar Nuevo Socio</h2>
+            <form id="formAgregarSocio">
+                <input type="text" id="nombre" placeholder="Nombre" required>
+                <input type="text" id="apellido" placeholder="Apellido" required>
+                <input type="number" id="edad" placeholder="Edad" min="4" max="20" required>
+                <input type="text" id="numeroSocio" placeholder="Número de Socio" required>
+                <select id="disciplina" required>
+                    <option value="">Seleccionar Disciplina</option>
+                    <option value="Fútbol">Fútbol</option>
+                    <option value="Natación">Natación</option>
+                    <option value="Tenis">Tenis</option>
+                </select>
+                <select id="genero" required>
+                    <option value="">Seleccionar Género</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <button type="submit">Agregar Socio</button>
+            </form>
+        </section>
+
+        <section class="prueba">
+            <h2>Estadísticas</h2>
+            <h2>Total de Socios: <span id="totalSocios">0</span></h2>
+        
+            <!-- Cantidad por Género -->
+            <div class="estadistica">
+                <h3>Cantidad por Género</h3>
+                <ul id="sociosPorGenero"></ul>
+            </div>
+        
+            <!-- Cantidad por Disciplina desglosada por Género -->
+            <div class="estadistica">
+                <h3>Cantidad por Disciplina (por Género)</h3>
+                <ul id="sociosPorDisciplina"></ul>
+            </div>
+        
+            <!-- Porcentajes por Género -->
+            <div class="estadistica">
+                <h3>Porcentaje por Género</h3>
+                <ul id="porcentajeGenero"></ul>
+            </div>
+        
+            <!-- Porcentajes por Disciplina -->
+            <div class="estadistica">
+                <h3>Porcentaje por Disciplina</h3>
+                <ul id="porcentajeDisciplina"></ul>
+            </div>
+        </section>
+        
+        
+    </main>
+    <footer>
+        <p>Copyright 2024 By Julio Fidanza</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
