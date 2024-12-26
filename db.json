@@ -1,13 +1,121 @@
 {
-    "socios": [
-      {
-        "id": 1,
-        "nombre": "Juan",
-        "apellido": "Pérez",
-        "edad": 30,
-        "disciplina": "Fútbol",
-        "genero": "Masculino",
-        "fechaInscripcion": "2015-01-15"
-      }
-    ]
+  "socios": [
+    {
+      "id": "790c",
+      "nombre": "Julio",
+      "apellido": "Fidanza",
+      "edad": 17,
+      "numeroSocio": "2",
+      "disciplina": "Fútbol",
+      "genero": "Masculino"
+    },
+    {
+      "id": "d374",
+      "nombre": "Rocio",
+      "apellido": "Gonzalez",
+      "edad": 17,
+      "numeroSocio": "1",
+      "disciplina": "Tenis",
+      "genero": "Femenino"
+    },
+    {
+      "id": "5b69",
+      "nombre": "Natan",
+      "apellido": "Loleo",
+      "edad": 17,
+      "numeroSocio": "3",
+      "disciplina": "Natación",
+      "genero": "Otro"
+    },
+    {
+      "id": "30a2",
+      "nombre": "Mauro",
+      "apellido": "Luciano",
+      "edad": 16,
+      "numeroSocio": "4",
+      "disciplina": "Fútbol",
+      "genero": "Masculino"
+    },
+    {
+      "id": "0220",
+      "nombre": "Marcela",
+      "apellido": "Castria",
+      "edad": 9,
+      "numeroSocio": "5",
+      "disciplina": "Atletismo",
+      "genero": "Femenino"
+    },
+    {
+      "id": "5c97",
+      "nombre": "Julio Victor",
+      "apellido": "Fidanza",
+      "edad": 18,
+      "numeroSocio": "6",
+      "disciplina": "Fútbol",
+      "genero": "Masculino"
+    },
+    {
+      "id": "1ea5",
+      "nombre": "socio",
+      "apellido": "prueba",
+      "edad": 8,
+      "numeroSocio": "7",
+      "disciplina": "Natación",
+      "genero": "Masculino"
+    },
+    {
+      "id": "8830",
+      "nombre": "Rocio",
+      "apellido": "Fidanza",
+      "edad": 10,
+      "numeroSocio": "8",
+      "disciplina": "Tenis",
+      "genero": "Femenino"
+    },
+    {
+      "id": "b15a",
+      "nombre": "prueba",
+      "apellido": "prueba",
+      "edad": 8,
+      "numeroSocio": "9",
+      "disciplina": "Natación",
+      "genero": "Masculino"
+    },
+    {
+      "id": "1181",
+      "nombre": "prueba",
+      "apellido": "prueba",
+      "edad": 8,
+      "numeroSocio": "10",
+      "disciplina": "Natación",
+      "genero": "Masculino"
+    },
+    {
+      "id": "f028",
+      "nombre": "prueba",
+      "apellido": "prueba",
+      "edad": 8,
+      "numeroSocio": "11",
+      "disciplina": "Natación",
+      "genero": "Masculino"
+    },
+    {
+      "id": "545f",
+      "nombre": "asd",
+      "apellido": "asd",
+      "edad": 6,
+      "numeroSocio": "12",
+      "disciplina": "Fútbol",
+      "genero": "Masculino"
+    },
+    {
+      "id": "fb69",
+      "nombre": "probando",
+      "apellido": "probando",
+      "edad": 7,
+      "numeroSocio": "13",
+      "disciplina": "Tenis",
+      "genero": "Masculino"
+    }
+  ]
 }

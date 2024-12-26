@@ -4,7 +4,32 @@
     box-sizing: border-box;
 }
 
+.estadisticas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
 
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #155d9e;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
 
 
 
@@ -96,7 +121,7 @@ footer {
     color: #333;
 }
 
-#estadisticas h2 {
+/* #estadisticas h2 {
     text-align: center;
     margin-bottom: 1rem;
     font-size: 2rem;
@@ -121,7 +146,7 @@ footer {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: #13286d;
-}
+} */
 
 #sub-lista {
     list-style-type: disc;
@@ -136,11 +161,11 @@ footer {
 }
 
 
-#totalSocios {
+/* #totalSocios {
     font-weight: bold;
     font-size: 1.2em;
     color: #007bff;
-}
+} */
 
 /* Estilos generales del formulario */
 #formAgregarSocio {
@@ -276,3 +301,34 @@ header .menu ul li{
     }
 }
 
+/* Estilos personalizados para SweetAlert2 */
+.swal-popup {
+    font-size: 1.2em;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+
+.swal-title {
+    color: #155d9e;
+    font-weight: bold;
+}
+
+.swal-content {
+    color: #333;
+}
+
+.swal-confirm-button {
+    background-color: #3085d6 !important;
+    color: #fff !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 1em !important;
+}
+
+.swal-cancel-button {
+    background-color: #d33 !important;
+    color: #fff !important;
+    border-radius: 5px !important;
+    padding: 10px 20px !important;
+    font-size: 1em !important;
+}

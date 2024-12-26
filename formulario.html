@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Socio</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Agregar Nuevo Socio</h1>
+        <form id="formAgregarSocio">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" placeholder="Apellido" required>
+            <input type="number" id="edad" placeholder="Edad" min="4" max="20" required>
+            <select id="disciplina" required>
+                <option value="">Seleccionar Disciplina</option>
+                <option value="Fútbol">Fútbol</option>
+                <option value="Natación">Natación</option>
+                <option value="Tenis">Tenis</option>
+                <option value="Atletismo">Atletismo</option>
+            </select>
+            <select id="genero" required>
+                <option value="">Seleccionar Género</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <button type="submit">Agregar Socio</button>
+        </form>
+    </main>
+    <script src="main.js"></script>
+</body>
+</html>

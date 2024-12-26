@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Club Deportivo</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,6 +13,7 @@
 
         <section>
             <h2>Listado de Socios</h2>
+            <button onclick="window.location.href='formulario.html'">Agregar Socio</button>
             <table id="tablaSocios">
                 <thead>
                     <tr>
@@ -29,63 +31,43 @@
         </section>
 
         <section>
-            <h2>Agregar Nuevo Socio</h2>
-            <form id="formAgregarSocio">
-                <input type="text" id="nombre" placeholder="Nombre" required>
-                <input type="text" id="apellido" placeholder="Apellido" required>
-                <input type="number" id="edad" placeholder="Edad" min="4" max="20" required>
-                <input type="text" id="numeroSocio" placeholder="Número de Socio" required>
-                <select id="disciplina" required>
-                    <option value="">Seleccionar Disciplina</option>
-                    <option value="Fútbol">Fútbol</option>
-                    <option value="Natación">Natación</option>
-                    <option value="Tenis">Tenis</option>
-                </select>
-                <select id="genero" required>
-                    <option value="">Seleccionar Género</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                </select>
-                <button type="submit">Agregar Socio</button>
-            </form>
-        </section>
-
-        <section class="prueba">
             <h2>Estadísticas</h2>
-            <h2>Total de Socios: <span id="totalSocios">0</span></h2>
-        
-            <!-- Cantidad por Género -->
-            <div class="estadistica">
-                <h3>Cantidad por Género</h3>
-                <ul id="sociosPorGenero"></ul>
-            </div>
-        
-            <!-- Cantidad por Disciplina desglosada por Género -->
-            <div class="estadistica">
-                <h3>Cantidad por Disciplina (por Género)</h3>
-                <ul id="sociosPorDisciplina"></ul>
-            </div>
-        
-            <!-- Porcentajes por Género -->
-            <div class="estadistica">
-                <h3>Porcentaje por Género</h3>
-                <ul id="porcentajeGenero"></ul>
-            </div>
-        
-            <!-- Porcentajes por Disciplina -->
-            <div class="estadistica">
-                <h3>Porcentaje por Disciplina</h3>
-                <ul id="porcentajeDisciplina"></ul>
+            <div class="estadisticas">
+                <div class="card">
+                    <h3>Total Socios</h3>
+                    <p id="totalSocios"></p>
+                </div>
+                <div class="card">
+                    <h3>Total Masculino</h3>
+                    <p id="totalMasculino"></p>
+                </div>
+                <div class="card">
+                    <h3>Total Femenino</h3>
+                    <p id="totalFemenino"></p>
+                </div>
+                <div class="card">
+                    <h3>Total Otro</h3>
+                    <p id="totalOtro"></p>
+                </div>
+                <div class="card">
+                    <h3>Porcentaje Masculino</h3>
+                    <p id="porcentajeMasculino"></p>
+                </div>
+                <div class="card">
+                    <h3>Porcentaje Femenino</h3>
+                    <p id="porcentajeFemenino"></p>
+                </div>
+                <div class="card">
+                    <h3>Porcentaje Otro</h3>
+                    <p id="porcentajeOtro"></p>
+                </div>
+                <div class="card">
+                    <h3>Disciplina por Género</h3>
+                    <p id="disciplinaPorGenero"></p>
+                </div>
             </div>
         </section>
-        
-        
     </main>
-    <footer>
-        <p>Copyright 2024 By Julio Fidanza</p>
-    </footer>
-
     <script src="main.js"></script>
 </body>
 </html>

@@ -9,14 +9,31 @@ class Socio {
     }
 }
 
-let listadoSocios = JSON.parse(localStorage.getItem("socios")) || [];
-function guardarSociosEnLocalStorage() {
-    localStorage.setItem("socios", JSON.stringify(listadoSocios));
+const API_URL = 'http://localhost:3000/socios';
+
+async function obtenerSocios() {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    return data;
 }
 
-function renderizarSocios() {
+async function guardarSocios(socios) {
+    for (const socio of socios) {
+        await fetch(`${API_URL}/${socio.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(socio)
+        });
+    }
+}
+
+async function renderizarSocios() {
     const listaSocios = document.getElementById("listaSocios");
-    listaSocios.innerHTML = "";
+    listaSocios.innerHTML = ""; // Limpiar la lista antes de renderizar
+
+    const listadoSocios = await obtenerSocios();
 
     listadoSocios.forEach((socio, index) => {
         const fila = document.createElement("tr");
@@ -39,16 +56,14 @@ function renderizarSocios() {
     });
 }
 
-
-function habilitarEdicion(index, botonEditar) {
+async function habilitarEdicion(index, botonEditar) {
     const fila = botonEditar.closest("tr");
     const celdas = fila.querySelectorAll("td[contenteditable]");
     celdas.forEach((celda) => {
         celda.contentEditable = "true";
-        celda.classList.add("editable"); // Añadir clase editable
+        celda.classList.add("editable");
     });
 
-    // Reemplazar las celdas de Disciplina y Género con un select
     const disciplinas = ["Fútbol", "Natación", "Tenis", "Atletismo"];
     const generos = ["Masculino", "Femenino", "Otro"];
 
@@ -81,21 +96,21 @@ function habilitarEdicion(index, botonEditar) {
         </select>
     `;
 
-    // Mostrar el botón Guardar y ocultar el botón Editar
     botonEditar.style.display = "none";
     const botonGuardar = fila.querySelector(".guardar");
     botonGuardar.style.display = "inline-block";
 }
 
-function guardarEdicion(index, botonGuardar) {
+async function guardarEdicion(index, botonGuardar) {
     const fila = botonGuardar.closest("tr");
     const celdas = fila.querySelectorAll("td[contenteditable]");
 
-    // Obtener valores actualizados de las celdas
     const disciplina = fila.children[4].querySelector("select").value;
     const genero = fila.children[5].querySelector("select").value;
 
+    const listadoSocios = await obtenerSocios();
     listadoSocios[index] = {
+        ...listadoSocios[index],
         nombre: celdas[0].textContent.trim(),
         apellido: celdas[1].textContent.trim(),
         edad: parseInt(celdas[2].textContent.trim()),
@@ -104,138 +119,160 @@ function guardarEdicion(index, botonGuardar) {
         genero: genero,
     };
 
-    // Guardar cambios en localStorage o en el servidor (si estás usando JSON Server)
-    guardarSociosEnLocalStorage();
+    await guardarSocios(listadoSocios);
 
-    // Deshabilitar edición en las celdas
     celdas.forEach((celda) => {
         celda.contentEditable = "false";
-        celda.classList.remove("editable"); // Quitar clase editable
+        celda.classList.remove("editable");
     });
-    // Revertir select a texto
     fila.children[4].innerText = disciplina;
     fila.children[5].innerText = genero;
 
-    // Mostrar el botón Editar y ocultar el botón Guardar
     const botonEditar = fila.querySelector(".editar");
     botonEditar.style.display = "inline-block";
     botonGuardar.style.display = "none";
 
-    alert("Los cambios se han guardado correctamente.");
-}
-function eliminarSocio(index) {
-    listadoSocios.splice(index, 1);
-    guardarSociosEnLocalStorage();
-    renderizarSocios();
-    actualizarEstadisticas();
-}
-
-function agregarSocio(nombre, apellido, edad, numeroSocio, disciplina, genero) {
-    if (edad < 4 || edad > 18) {
-        alert("La edad debe estar entre 4 y 18 años.");
-        return;
-    }
-
-    const nuevoSocio = new Socio(nombre, apellido, edad, numeroSocio, disciplina, genero);
-    listadoSocios.push(nuevoSocio);
-    guardarSociosEnLocalStorage();
-    renderizarSocios();
-    actualizarEstadisticas();
-}
-
-function actualizarEstadisticas() {
-    const totalSocios = listadoSocios.length;
-    document.getElementById("totalSocios").textContent = totalSocios;
-
-    // Cantidad por género
-    const generos = listadoSocios.reduce((acc, socio) => {
-        acc[socio.genero] = (acc[socio.genero] || 0) + 1;
-        return acc;
-    }, {});
-
-    // Mostrar cantidad por género
-    const sociosPorGenero = document.getElementById("sociosPorGenero");
-    sociosPorGenero.innerHTML = "";
-    for (const [genero, cantidad] of Object.entries(generos)) {
-        const li = document.createElement("li");
-        li.textContent = `${genero}: ${cantidad}`;
-        sociosPorGenero.appendChild(li);
-    }
-
-    // Cantidad por disciplina, desglosada por género
-    const disciplinasPorGenero = listadoSocios.reduce((acc, socio) => {
-        if (!acc[socio.disciplina]) {
-            acc[socio.disciplina] = { Masculino: 0, Femenino: 0, Otro: 0 };
+    Swal.fire({
+        title: 'Cambios guardados',
+        text: 'Los cambios se han guardado correctamente',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+            popup: 'swal-popup',
+            title: 'swal-title',
+            content: 'swal-content',
+            confirmButton: 'swal-confirm-button'
         }
-        acc[socio.disciplina][socio.genero]++;
-        return acc;
-    }, {});
-
-    // Mostrar cantidad por disciplina y género
-    const sociosPorDisciplina = document.getElementById("sociosPorDisciplina");
-    sociosPorDisciplina.innerHTML = "";
-    for (const [disciplina, generoData] of Object.entries(disciplinasPorGenero)) {
-        const li = document.createElement("li");
-        li.textContent = `${disciplina}: Masculino: ${generoData.Masculino}, Femenino: ${generoData.Femenino}, Otro: ${generoData.Otro}`;
-        sociosPorDisciplina.appendChild(li);
-    }
-
-    // Porcentaje por género
-    const porcentajeGeneros = {
-        Masculino: ((generos.Masculino || 0) / totalSocios * 100).toFixed(2),
-        Femenino: ((generos.Femenino || 0) / totalSocios * 100).toFixed(2),
-        Otro: ((generos.Otro || 0) / totalSocios * 100).toFixed(2),
-    };
-
-    // Mostrar porcentaje por género
-    const porcentajeGeneroElement = document.getElementById("porcentajeGenero");
-    porcentajeGeneroElement.innerHTML = "";
-    for (const [genero, porcentaje] of Object.entries(porcentajeGeneros)) {
-        const li = document.createElement("li");
-        li.textContent = `${genero}: ${porcentaje}%`;
-        porcentajeGeneroElement.appendChild(li);
-    }
-
-    // Porcentaje por disciplina
-    const disciplinas = listadoSocios.reduce((acc, socio) => {
-        acc[socio.disciplina] = (acc[socio.disciplina] || 0) + 1;
-        return acc;
-    }, {});
-
-    const porcentajeDisciplina = {};
-    for (const [disciplina, cantidad] of Object.entries(disciplinas)) {
-        porcentajeDisciplina[disciplina] = ((cantidad / totalSocios) * 100).toFixed(2);
-    }
-
-    // Mostrar porcentaje por disciplina
-    const porcentajeDisciplinaElement = document.getElementById("porcentajeDisciplina");
-    porcentajeDisciplinaElement.innerHTML = "";
-    for (const [disciplina, porcentaje] of Object.entries(porcentajeDisciplina)) {
-        const li = document.createElement("li");
-        li.textContent = `${disciplina}: ${porcentaje}%`;
-        porcentajeDisciplinaElement.appendChild(li);
-    }
+    });
 }
 
-document.getElementById("formAgregarSocio").addEventListener("submit", function (e) {
-    e.preventDefault();
+async function actualizarEstadisticas() {
+    const listadoSocios = await obtenerSocios();
+    const totalSocios = listadoSocios.length;
+    const totalMasculino = listadoSocios.filter(socio => socio.genero === "Masculino").length;
+    const totalFemenino = listadoSocios.filter(socio => socio.genero === "Femenino").length;
+    const totalOtro = listadoSocios.filter(socio => socio.genero === "Otro").length;
 
-    const nombre = document.getElementById("nombre").value;
-    const apellido = document.getElementById("apellido").value;
-    const edad = parseInt(document.getElementById("edad").value, 10);
-    const numeroSocio = document.getElementById("numeroSocio").value;
-    const disciplina = document.getElementById("disciplina").value;
-    const genero = document.getElementById("genero").value;
+    const porcentajeMasculino = ((totalMasculino / totalSocios) * 100).toFixed(2);
+    const porcentajeFemenino = ((totalFemenino / totalSocios) * 100).toFixed(2);
+    const porcentajeOtro = ((totalOtro / totalSocios) * 100).toFixed(2);
 
-    // Llamar a la función para agregar el socio
-    agregarSocio(nombre, apellido, edad, numeroSocio, disciplina, genero);
+    const disciplinasPorGenero = listadoSocios.reduce((acc, socio) => {
+        if (!acc[socio.genero]) {
+            acc[socio.genero] = {};
+        }
+        if (!acc[socio.genero][socio.disciplina]) {
+            acc[socio.genero][socio.disciplina] = 0;
+        }
+        acc[socio.genero][socio.disciplina]++;
+        return acc;
+    }, {});
 
-    // Limpiar el formulario
-    document.getElementById("formAgregarSocio").reset();
-    renderizarSocios();
-    actualizarEstadisticas();
+    document.getElementById("totalSocios").textContent = totalSocios;
+    document.getElementById("totalMasculino").textContent = totalMasculino;
+    document.getElementById("totalFemenino").textContent = totalFemenino;
+    document.getElementById("totalOtro").textContent = totalOtro;
+    document.getElementById("porcentajeMasculino").textContent = `${porcentajeMasculino}%`;
+    document.getElementById("porcentajeFemenino").textContent = `${porcentajeFemenino}%`;
+    document.getElementById("porcentajeOtro").textContent = `${porcentajeOtro}%`;
 
+    let disciplinaPorGeneroHTML = '';
+    for (const genero in disciplinasPorGenero) {
+        for (const disciplina in disciplinasPorGenero[genero]) {
+            disciplinaPorGeneroHTML += `${genero} - ${disciplina}: ${disciplinasPorGenero[genero][disciplina]}<br>`;
+        }
+    }
+    document.getElementById("disciplinaPorGenero").innerHTML = disciplinaPorGeneroHTML;
+}
+
+async function eliminarSocio(index) {
+    const listadoSocios = await obtenerSocios();
+    const socio = listadoSocios[index];
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: `¿Deseas eliminar al socio ${socio.nombre} ${socio.apellido}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'swal-popup',
+            title: 'swal-title',
+            content: 'swal-content',
+            confirmButton: 'swal-confirm-button',
+            cancelButton: 'swal-cancel-button'
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await fetch(`${API_URL}/${socio.id}`, {
+                method: 'DELETE'
+            });
+            await renderizarSocios();
+            actualizarEstadisticas();
+            Swal.fire({
+                title: 'Eliminado',
+                text: 'El socio ha sido eliminado exitosamente',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    popup: 'swal-popup',
+                    title: 'swal-title',
+                    content: 'swal-content',
+                    confirmButton: 'swal-confirm-button'
+                }
+            });
+        }
+    });
+}
+
+async function agregarSocio(nombre, apellido, edad, disciplina, genero) {
+    const listadoSocios = await obtenerSocios();
+    const nuevoNumeroSocio = listadoSocios.length > 0 ? Math.max(...listadoSocios.map(socio => parseInt(socio.numeroSocio))) + 1 : 1;
+    const nuevoSocio = new Socio(nombre, apellido, edad, nuevoNumeroSocio.toString(), disciplina, genero);
+    
+    await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nuevoSocio)
+    });
+    Swal.fire({
+        title: 'Socio agregado',
+        text: 'El socio ha sido agregado exitosamente',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        window.location.href = 'index.html';
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const formAgregarSocio = document.getElementById("formAgregarSocio");
+    if (formAgregarSocio) {
+        formAgregarSocio.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const edad = parseInt(document.getElementById("edad").value, 10);
+            const disciplina = document.getElementById("disciplina").value;
+            const genero = document.getElementById("genero").value;
+
+            await agregarSocio(nombre, apellido, edad, disciplina, genero);
+
+            document.getElementById("formAgregarSocio").reset();
+        });
+    }
+
+    if (document.getElementById("listaSocios")) {
+        renderizarSocios();
+        actualizarEstadisticas();
+    }
 });
-
-renderizarSocios();
-actualizarEstadisticas();
