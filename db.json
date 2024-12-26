@@ -1,22 +1,13 @@
 {
   "socios": [
     {
-      "id": "790c",
-      "nombre": "Julio",
-      "apellido": "Fidanza",
-      "edad": 17,
-      "numeroSocio": "2",
-      "disciplina": "Fútbol",
-      "genero": "Masculino"
-    },
-    {
       "id": "d374",
       "nombre": "Rocio",
       "apellido": "Gonzalez",
       "edad": 17,
       "numeroSocio": "1",
       "disciplina": "Tenis",
-      "genero": "Femenino"
+      "genero": "Masculino"
     },
     {
       "id": "5b69",
@@ -73,48 +64,21 @@
       "genero": "Femenino"
     },
     {
-      "id": "b15a",
-      "nombre": "prueba",
-      "apellido": "prueba",
-      "edad": 8,
-      "numeroSocio": "9",
-      "disciplina": "Natación",
-      "genero": "Masculino"
-    },
-    {
-      "id": "1181",
-      "nombre": "prueba",
-      "apellido": "prueba",
-      "edad": 8,
-      "numeroSocio": "10",
-      "disciplina": "Natación",
-      "genero": "Masculino"
-    },
-    {
-      "id": "f028",
-      "nombre": "prueba",
-      "apellido": "prueba",
-      "edad": 8,
-      "numeroSocio": "11",
-      "disciplina": "Natación",
-      "genero": "Masculino"
-    },
-    {
       "id": "545f",
-      "nombre": "asd",
-      "apellido": "asd",
-      "edad": 6,
+      "nombre": "fernado",
+      "apellido": "cano",
+      "edad": 8,
       "numeroSocio": "12",
-      "disciplina": "Fútbol",
+      "disciplina": "Atletismo",
       "genero": "Masculino"
     },
     {
-      "id": "fb69",
-      "nombre": "probando",
-      "apellido": "probando",
+      "id": "9f1b",
+      "nombre": "Julio",
+      "apellido": "Fidanz",
       "edad": 7,
-      "numeroSocio": "13",
-      "disciplina": "Tenis",
+      "numeroSocio": "14",
+      "disciplina": "Fútbol",
       "genero": "Masculino"
     }
   ]

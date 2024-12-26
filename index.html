@@ -13,7 +13,18 @@
 
         <section>
             <h2>Listado de Socios</h2>
-            <button onclick="window.location.href='formulario.html'">Agregar Socio</button>
+            <div class="botonera">
+                <button onclick="window.location.href='index.html'">Inicio</button>
+
+                <button onclick="window.location.href='formulario.html'">Agregar Socio</button>
+                <button onclick="window.location.href='futbol.html'">Fútbol</button>
+                <button onclick="window.location.href='natacion.html'">Natación</button>
+                <button onclick="window.location.href='tenis.html'">Tenis</button>
+                <button onclick="window.location.href='atletismo.html'">Atletismo</button>
+
+
+            </div>
+            
             <table id="tablaSocios">
                 <thead>
                     <tr>
@@ -34,36 +45,50 @@
             <h2>Estadísticas</h2>
             <div class="estadisticas">
                 <div class="card">
-                    <h3>Total Socios</h3>
-                    <p id="totalSocios"></p>
+                    <div class="card-inner">
+                      <div class="card-front">
+                        <p>Total Socios</p>
+                      </div>
+                      <div class="card-back">
+                        <p id="totalSocios"></p>
+                      </div>
+                    </div>
                 </div>
                 <div class="card">
-                    <h3>Total Masculino</h3>
-                    <p id="totalMasculino"></p>
+                    <div class="card-inner">
+                      <div class="card-front">
+                        <p>Total de socios por genero</p>
+                      </div>
+                      <div class="card-back">
+                        <p>Masculino: <strong id="totalMasculino"></strong></p>
+                        <p>Femenino: <strong id="totalFemenino"></strong></p>
+                       
+                        <p>Otro: <strong id="totalOtro"></strong></p>
+                      </div>
+                    </div>
                 </div>
                 <div class="card">
-                    <h3>Total Femenino</h3>
-                    <p id="totalFemenino"></p>
+                    <div class="card-inner">
+                      <div class="card-front">
+                        <p>Porcentaje de socios por género</p>
+                      </div>
+                      <div class="card-back">
+                        <p>Masculino: <strong id="porcentajeMasculino"></strong></p>
+                        <p>Femenino: <strong id="porcentajeFemenino"></strong></p>
+                        <p>Otro: <strong id="porcentajeOtro"></strong></p>
+                      </div>
+                    </div>
                 </div>
                 <div class="card">
-                    <h3>Total Otro</h3>
-                    <p id="totalOtro"></p>
-                </div>
-                <div class="card">
-                    <h3>Porcentaje Masculino</h3>
-                    <p id="porcentajeMasculino"></p>
-                </div>
-                <div class="card">
-                    <h3>Porcentaje Femenino</h3>
-                    <p id="porcentajeFemenino"></p>
-                </div>
-                <div class="card">
-                    <h3>Porcentaje Otro</h3>
-                    <p id="porcentajeOtro"></p>
-                </div>
-                <div class="card">
-                    <h3>Disciplina por Género</h3>
-                    <p id="disciplinaPorGenero"></p>
+                    <div class="card-inner">
+                      <div class="card-front">
+                        <p>Total en cada disciplina por genero</p>
+                      </div>
+                      <div class="card-back">
+                        <strong id="disciplinaPorGenero"></strong></p>
+                        
+                      </div>
+                    </div>
                 </div>
             </div>
         </section>

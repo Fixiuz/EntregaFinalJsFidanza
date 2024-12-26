@@ -16,19 +16,6 @@ async function obtenerSocios() {
     const data = await response.json();
     return data;
 }
-
-async function guardarSocios(socios) {
-    for (const socio of socios) {
-        await fetch(`${API_URL}/${socio.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(socio)
-        });
-    }
-}
-
 async function renderizarSocios() {
     const listaSocios = document.getElementById("listaSocios");
     listaSocios.innerHTML = ""; // Limpiar la lista antes de renderizar
@@ -46,15 +33,45 @@ async function renderizarSocios() {
             <td contenteditable="false">${socio.disciplina}</td>
             <td contenteditable="false">${socio.genero}</td>
             <td>
-                <button class="editar" onclick="habilitarEdicion(${index}, this)">Editar</button>
-                <button class="guardar" style="display: none;" onclick="guardarEdicion(${index}, this)">Guardar</button>
-                <button class="eliminar" onclick="eliminarSocio(${index})">Eliminar</button>
+                <button class="editar" onclick="habilitarEdicion('${socio.id}', this)">Editar</button>
+                <button class="guardar" style="display: none;" onclick="guardarEdicion('${socio.id}', this)">Guardar</button>
+                <button class="eliminar" onclick="eliminarSocio('${socio.id}')">Eliminar</button>
             </td>
         `;
 
         listaSocios.appendChild(fila);
     });
 }
+
+async function renderizarSociosPorDisciplina(disciplina) {
+    const listaSocios = document.getElementById("listaSocios");
+    listaSocios.innerHTML = ""; // Limpiar la lista antes de renderizar
+
+    const listadoSocios = await obtenerSocios();
+    const sociosFiltrados = listadoSocios.filter(socio => socio.disciplina === disciplina);
+
+    sociosFiltrados.forEach((socio) => {
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td contenteditable="false">${socio.nombre}</td>
+            <td contenteditable="false">${socio.apellido}</td>
+            <td contenteditable="false">${socio.edad}</td>
+            <td contenteditable="false">${socio.numeroSocio}</td>
+            <td contenteditable="false">${socio.disciplina}</td>
+            <td contenteditable="false">${socio.genero}</td>
+            <td>
+                <button class="editar" onclick="habilitarEdicion('${socio.id}', this)">Editar</button>
+                <button class="guardar" style="display: none;" onclick="guardarEdicion('${socio.id}', this)">Guardar</button>
+                <button class="eliminar" onclick="eliminarSocio('${socio.id}')">Eliminar</button>
+            </td>
+        `;
+
+        listaSocios.appendChild(fila);
+    });
+}
+
+
 
 async function habilitarEdicion(index, botonEditar) {
     const fila = botonEditar.closest("tr");
@@ -109,17 +126,22 @@ async function guardarEdicion(index, botonGuardar) {
     const genero = fila.children[5].querySelector("select").value;
 
     const listadoSocios = await obtenerSocios();
-    listadoSocios[index] = {
-        ...listadoSocios[index],
-        nombre: celdas[0].textContent.trim(),
-        apellido: celdas[1].textContent.trim(),
-        edad: parseInt(celdas[2].textContent.trim()),
-        numeroSocio: celdas[3].textContent.trim(),
-        disciplina: disciplina,
-        genero: genero,
-    };
+    const socio = listadoSocios.find(s => s.id === index);
 
-    await guardarSocios(listadoSocios);
+    socio.nombre = celdas[0].textContent.trim();
+    socio.apellido = celdas[1].textContent.trim();
+    socio.edad = parseInt(celdas[2].textContent.trim());
+    socio.numeroSocio = celdas[3].textContent.trim();
+    socio.disciplina = disciplina;
+    socio.genero = genero;
+
+    await fetch(`${API_URL}/${socio.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(socio)
+    });
 
     celdas.forEach((celda) => {
         celda.contentEditable = "false";
@@ -180,15 +202,15 @@ async function actualizarEstadisticas() {
     let disciplinaPorGeneroHTML = '';
     for (const genero in disciplinasPorGenero) {
         for (const disciplina in disciplinasPorGenero[genero]) {
-            disciplinaPorGeneroHTML += `${genero} - ${disciplina}: ${disciplinasPorGenero[genero][disciplina]}<br>`;
+            disciplinaPorGeneroHTML += `${disciplina} ${genero}: ${disciplinasPorGenero[genero][disciplina]}<br>`;
         }
     }
     document.getElementById("disciplinaPorGenero").innerHTML = disciplinaPorGeneroHTML;
 }
 
-async function eliminarSocio(index) {
+async function eliminarSocio(id) {
     const listadoSocios = await obtenerSocios();
-    const socio = listadoSocios[index];
+    const socio = listadoSocios.find(s => s.id === id);
 
     Swal.fire({
         title: '¿Estás seguro?',
@@ -272,7 +294,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (document.getElementById("listaSocios")) {
-        renderizarSocios();
-        actualizarEstadisticas();
+        const disciplina = document.body.getAttribute('data-disciplina');
+        if (disciplina) {
+            renderizarSociosPorDisciplina(disciplina);
+        } else {
+            renderizarSocios();
+            actualizarEstadisticas();
+        }
     }
 });

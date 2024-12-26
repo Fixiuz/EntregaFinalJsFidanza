@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenis - Club Deportivo</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-disciplina="Tenis">
+    <main class="formulario">
+        <h1>Socios de Tenis</h1>
+        <div class="botonera">
+            <button onclick="window.location.href='index.html'">Inicio</button>
+
+            <button onclick="window.location.href='formulario.html'">Agregar Socio</button>
+            <button onclick="window.location.href='futbol.html'">Fútbol</button>
+            <button onclick="window.location.href='natacion.html'">Natación</button>
+            <button onclick="window.location.href='tenis.html'">Tenis</button>
+            <button onclick="window.location.href='atletismo.html'">Atletismo</button>
+
+
+        </div>
+        <table id="tablaSocios">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Edad</th>
+                    <th>Número de Socio</th>
+                    <th>Disciplina</th>
+                    <th>Género</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaSocios"></tbody>
+        </table>
+    </main>
+    <script src="main.js"></script>
+</body>
+</html>
